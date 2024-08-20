@@ -1,0 +1,72 @@
+
+/* 
+    This is the CSS file for the page component. 
+    It contains the styles for the header of the page.
+*/
+.header { 
+    background-color: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+.container {
+    flex-direction: column;
+    align-items: center; /* Căn giữa theo chiều ngang */
+    min-height: 100vh; /* Đảm bảo container chiếm toàn bộ chiều cao trang */
+    text-align: center;
+    padding: 20px;
+}
+
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/* Style cho bảng */
+.kols-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    text-align: left;
+    background-color: rgb(236, 236, 236); /* Màu nền trắng cho bảng */
+    border-radius: 8px; /* Bo tròn góc bảng */
+    overflow: hidden; /* Ẩn phần thừa */
+}
+
+/* Style cho tiêu đề bảng */
+.kols-table th, .kols-table td {
+    border: 1px solid #c8c4c4;
+    padding: 12px; /* Tăng padding để bảng trông dễ đọc hơn */
+    text-align: center; /* Căn giữa nội dung bảng */
+}
+
+/* Đổi màu tiêu đề bảng */
+
+/* Style for table headers */
+.kols-table th {
+    background-color: #4f5abe;
+    color: white;
+    text-align: center;
+}
+
+/* Style for table rows */
+.kols-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Màu nền nhạt cho các hàng chẵn */
+    color:black
+}
+
+.kols-table tr:hover {
+    background-color: #e1e1e1; /* Màu nền khi di chuột qua hàng */
+    color:black
+}
+
+.scroll-buttons {
+    margin-top: 30px;
+}
+
+.scroll-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}

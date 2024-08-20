@@ -1,0 +1,135 @@
+"use client"
+
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import './page.css'
+
+interface Kols {
+	kolID: number;
+	userProfileID: number;
+	language: string;
+	education: string;
+	expectedSalary: number;
+	expectedSalaryEnable: boolean;
+	channelSettingTypeID: number;
+	idFrontURL: string;
+	idBackURL: string;
+	portraitURL: string;
+	rewardID: number;
+	paymentMethodID: number;
+	testimonialsID: number;
+	verificationStatus: boolean;
+	enabled: boolean;
+	activeDate: Date;
+	active: boolean;
+	createdBy: string;
+	createdDate: Date;
+	modifiedBy: string;
+	modifiedDate: Date;
+	isRemove: boolean;
+	isOnBoarding: boolean;
+	code: string;
+	portraitRightURL: string;
+	portraitLeftURL: string;
+	livenessStatus: boolean;
+}
+
+const Page = () => {
+    // * Use useState to store Kols from API 
+    // ! (if you have more optimized way to store data, PLEASE FEELS FREE TO CHANGE)
+    const [Kols , setKols] = useState<Kols[]>([]);  
+	const [loading, setLoading] = useState(true);
+    // * Fetch API over here 
+    // * Use useEffect to fetch data from API 
+	const [currentPage, setCurrentPage] = useState(1);
+	const pageLimit = 5;
+
+    useEffect(() => {
+		const fetchKols = async () => {
+			setLoading(true);
+			try {
+				const response = await axios.get('http://localhost:8081/kols', {
+					params: {
+						pageIndex: 1,
+						pageLimit: 100
+					}
+				});
+				//console.log('API Data:', response.data.kol);
+				if (Array.isArray(response.data.kol)) {
+                    setKols(response.data.kol);
+					//console.log('State Data:', Kols);
+                }
+				else {
+                    console.error('Expected an array but got:', response.data.kol);
+                }
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			} finally {
+				setLoading(false);
+            }
+		};
+		fetchKols();
+    }, []);
+
+	const scrollToTop = () => {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+		}
+	};
+
+	const scrollToBottom = () => {
+		if ((currentPage * pageLimit) < Kols.length) {
+			setCurrentPage(currentPage + 1);
+		}
+	};
+
+	const displayedKols = Kols.slice((currentPage - 1) * pageLimit, currentPage * pageLimit);
+
+	return (
+		<div className="container">
+			<h1 className="header">Kols List</h1>
+				<div className="scroll-buttons">
+					<button onClick={scrollToTop} className="scroll-button" disabled={currentPage === 1}>Scroll Up</button>
+					<button onClick={scrollToBottom} className="scroll-button" disabled={(currentPage * pageLimit) >= Kols.length}>Scroll Down</button>
+				</div>
+			{loading ? (
+			<p>Loading...</p>
+			) : (
+				<div className="d-flex">
+					{Kols.length === 0 ? (
+                    <p>No KOLs available.</p>
+                ) : (
+					<table className="kols-table">
+						<thead>
+							<tr>
+							<th>KolID</th>
+							<th>UserProfileID</th>
+							<th>Language</th>
+							<th>Education</th>
+							<th>Expected Salary</th>
+							</tr>
+						</thead>
+						<tbody>
+							{displayedKols.map((kol, index) => {
+								//console.log('State Data::', kol);
+								return	(
+									<tr key={`${kol.kolID}-${index}`}>
+										<td>{kol.kolID}</td>
+										<td>{kol.userProfileID}</td>
+										<td>{kol.language}</td>
+										<td>{kol.education}</td>
+										<td>{kol.expectedSalary}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				)}
+				</div>
+			)}
+			
+		</div>
+		);
+	};
+
+export default Page;
