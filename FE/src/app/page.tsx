@@ -49,7 +49,7 @@ const Page = () => {
 		const fetchKols = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get('http://localhost:8081/kols', {
+				const response = await axios.get('https://testingapi-g3sw.onrender.com/kols', {
 					params: {
 						pageIndex: 1,
 						pageLimit: 30
@@ -77,7 +77,7 @@ const Page = () => {
 				{"key":"language","value": searchLanguage}
 			);
 			// searchParams={"key":"language","value":"English"}
-			const response = await axios.get('http://localhost:8081/kols', {
+			const response = await axios.get('https://testingapi-g3sw.onrender.com/kols', {
 				params: {
 					pageIndex: 1,
 					pageLimit: 30,

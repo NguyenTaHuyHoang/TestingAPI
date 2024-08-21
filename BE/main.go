@@ -19,7 +19,7 @@ func main() {
 
 	// Use the CORS middleware
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"}, // Allow your frontend's origin
+		AllowOrigins:     []string{"https://testing-api-lac.vercel.app"}, // Allow your frontend's origin
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin*", "Content-Type", "Accept"},
 		ExposeHeaders:    []string{"Content-Length"},
