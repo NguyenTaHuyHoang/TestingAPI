@@ -42,7 +42,7 @@ const Page = () => {
     // * Fetch API over here 
     // * Use useEffect to fetch data from API 
 	const [currentPage, setCurrentPage] = useState(1);
-	const pageLimit = 5;
+	const pageLimit = 4;
 
     useEffect(() => {
 		const fetchKols = async () => {
@@ -73,63 +73,80 @@ const Page = () => {
 
 	const scrollToTop = () => {
 		if (currentPage > 1) {
+			triggerScrollAnimation("up");
+			setTimeout(() => {
 			setCurrentPage(currentPage - 1);
+			}, 500); // Match this to the animation duration
 		}
 	};
 
 	const scrollToBottom = () => {
-		if ((currentPage * pageLimit) < Kols.length) {
+		if (currentPage * pageLimit < Kols.length) {
+			triggerScrollAnimation("down");
+			setTimeout(() => {
 			setCurrentPage(currentPage + 1);
+			}, 500); // Match this to the animation duration
+		}
+	};
+
+	const triggerScrollAnimation = (direction: "up" | "down") => {
+		const tableElement = document.querySelector(".kols-table tbody") as HTMLElement;
+		if (tableElement) {
+			tableElement.classList.remove("scroll-up", "scroll-down");
+			// Force reflow to restart animation
+			void tableElement.offsetWidth;
+			tableElement.classList.add(direction === "up" ? "scroll-up" : "scroll-down");
 		}
 	};
 
 	const displayedKols = Kols.slice((currentPage - 1) * pageLimit, currentPage * pageLimit);
-
-	return (
-		<div className="container">
-			<h1 className="header">Kols List</h1>
-				<div className="scroll-buttons">
-					<button onClick={scrollToTop} className="scroll-button" disabled={currentPage === 1}>Scroll Up</button>
-					<button onClick={scrollToBottom} className="scroll-button" disabled={(currentPage * pageLimit) >= Kols.length}>Scroll Down</button>
-				</div>
-			{loading ? (
-			<p>Loading...</p>
-			) : (
-				<div className="d-flex">
-					{Kols.length === 0 ? (
-                    <p>No KOLs available.</p>
-                ) : (
-					<table className="kols-table">
-						<thead>
-							<tr>
-							<th>KolID</th>
-							<th>UserProfileID</th>
-							<th>Language</th>
-							<th>Education</th>
-							<th>Expected Salary</th>
-							</tr>
-						</thead>
-						<tbody>
-							{displayedKols.map((kol, index) => {
-								//console.log('State Data::', kol);
-								return	(
-									<tr key={`${kol.kolID}-${index}`}>
-										<td>{kol.kolID}</td>
-										<td>{kol.userProfileID}</td>
-										<td>{kol.language}</td>
-										<td>{kol.education}</td>
-										<td>{kol.expectedSalary}</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				)}
-				</div>
-			)}
-			
-		</div>
-		);
-	};
+    const totalPages = Math.ceil(Kols.length / pageLimit);
+    return (
+        <div className="container">
+            <h1 className="header">Kols List</h1>
+            <div className="scroll-buttons">
+                <button onClick={scrollToTop} className="scroll-button" disabled={currentPage === 1}>Scroll Up</button>
+                <button onClick={scrollToBottom} className="scroll-button" disabled={(currentPage * pageLimit) >= Kols.length}>Scroll Down</button>
+            </div>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    <div className="d-flex">
+                        {Kols.length === 0 ? (
+                            <p>No KOLs available.</p>
+                        ) : (
+                            <table className="kols-table">
+                                <thead>
+                                    <tr>
+                                        <th>KolID</th>
+                                        <th>UserProfileID</th>
+                                        <th>Language</th>
+                                        <th>Education</th>
+                                        <th>Expected Salary</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {displayedKols.map((kol, index) => (
+                                        <tr key={`${kol.kolID}-${index}`}>
+                                            <td>{kol.kolID}</td>
+                                            <td>{kol.userProfileID}</td>
+                                            <td>{kol.language}</td>
+                                            <td>{kol.education}</td>
+                                            <td>{kol.expectedSalary}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                    <div className="page-indicator">
+                        Page {currentPage} of {totalPages}
+                    </div>
+                </>
+            )}
+        </div>
+    );
+};
 
 export default Page;
