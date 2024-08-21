@@ -157,6 +157,12 @@ const Page = () => {
 					placeholder="Search by language"
 					value={searchLanguage}
 					onChange={(e) => setSearchLanguage(e.target.value)}
+					onKeyPress={(e) => {
+						if (e.key === 'Enter') {
+							setCurrentPage(1); // Reset to the first page when searching
+							fetchKols_searchParams(); // Fetch KOLs with new search parameters
+						}
+					}}
 				/>
 				<button onClick={() => {
 					setCurrentPage(1); // Reset to the first page when searching
