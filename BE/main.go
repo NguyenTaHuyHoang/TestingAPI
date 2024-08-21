@@ -30,7 +30,7 @@ func main() {
 	r.GET("/kols", Controllers.GetKolsController(Initializers.DB))
 
 	// Run Gin server
-	if err := r.Run("127.0.0.1:8081"); err != nil {
+	if err := r.Run(":8081"); err != nil {
 		log.Println("Failed to start server")
 	}
 }
