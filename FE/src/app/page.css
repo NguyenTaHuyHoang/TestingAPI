@@ -106,3 +106,50 @@
         opacity: 1;
     }
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-form input {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .scroll-buttons {
+        flex-direction: column;
+    }
+
+    .scroll-button {
+        margin: 10px 0;
+    }
+
+    .kols-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .kols-table th, .kols-table td {
+        display: block;
+        text-align: right;
+    }
+
+    .kols-table th::before, .kols-table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+
+    .kols-table th, .kols-table td {
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .kols-table th:last-child, .kols-table td:last-child {
+        border-bottom: none;
+    }
+}
