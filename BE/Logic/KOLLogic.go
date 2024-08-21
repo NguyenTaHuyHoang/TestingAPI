@@ -14,20 +14,35 @@ import (
 // @return: List of KOLs and error message
 
 func GetKolLogic(data *DTO.GetSearchParam) ([]*DTO.KolDTO, error) {
-
-	// Query the database and get the list of KOLs
 	DB := Initializers.DB
 
-	// check pagelimit
 	data.Process()
 	var resultListKols []*DTO.KolDTO
 
-	if err := DB.Table(DTO.KolDTO{}.TableName()).Count(&data.PageSize).Error; err != nil {
-		return nil, nil
+	query := DB.Table(DTO.KolDTO{}.TableName())
+	if data.SearchParams != nil {
+		for _, param := range *data.SearchParams {
+			if param.Key != "" && param.Value != "" {
+				query = query.Where(param.Key+" = ?", param.Value)
+			}
+		}
 	}
-	if err := DB.Offset(int(data.PageIndex-1) * int(data.PageLimit)).Limit(int(data.PageLimit)).Find(&resultListKols).Error; err != nil {
+
+	var totalRecords int64
+	if err := query.Count(&totalRecords).Error; err != nil {
+		return nil, err
+	}
+	data.PageSize = totalRecords
+
+	if err := query.Offset(int(data.PageIndex-1) * int(data.PageLimit)).Limit(int(data.PageLimit)).Find(&resultListKols).Error; err != nil {
 		return nil, err
 	}
 
+	// Save the search results back to SearchParams
+	var searchResults []DTO.SearchParam
+	if err := query.Find(&searchResults).Error; err != nil {
+		return nil, err
+	}
+	data.SearchParams = &searchResults
 	return resultListKols, nil
 }

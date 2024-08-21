@@ -13,8 +13,8 @@ type ListDTOModel[T any] struct {
 }
 
 type SearchParam struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key   string `json:"key" form:"key"`
+	Value string `json:"value" form:"value"`
 }
 
 type AddedParam map[string]string

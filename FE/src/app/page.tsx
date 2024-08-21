@@ -99,6 +99,27 @@ const Page = () => {
 		}
 	};
 
+	const handleWheel = (event: WheelEvent) => {
+		event.preventDefault();
+		if (event.deltaY < 0) {
+			scrollToTop();
+		} else if (event.deltaY > 0) {
+			scrollToBottom();
+		}
+	};
+
+	useEffect(() => {
+		const tableElement = document.querySelector(".kols-table") as HTMLElement;
+		if (tableElement) {
+			tableElement.addEventListener("wheel", handleWheel, { passive: false });
+		}
+		return () => {
+			if (tableElement) {
+				tableElement.removeEventListener("wheel", handleWheel);
+			}
+		};
+	}, [currentPage]);
+
 	const displayedKols = Kols.slice((currentPage - 1) * pageLimit, currentPage * pageLimit);
     const totalPages = Math.ceil(Kols.length / pageLimit);
     return (
