@@ -35,7 +35,7 @@ func GetKolsController(db *gorm.DB) func(*gin.Context) {
 			KolsVM.Result = Const.UnSuccess
 			KolsVM.ErrorMessage = error.Error()
 			KolsVM.PageIndex = data.PageIndex // * change this to the actual page index from the request
-			KolsVM.PageSize = data.PageLimit  // * change this to the actual page size from the request
+			KolsVM.PageSize = data.PageSize   // * change this to the actual page size from the request
 			KolsVM.Guid = guid
 			context.JSON(http.StatusInternalServerError, KolsVM)
 			return

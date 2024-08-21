@@ -38,11 +38,5 @@ func GetKolLogic(data *DTO.GetSearchParam) ([]*DTO.KolDTO, error) {
 		return nil, err
 	}
 
-	// Save the search results back to SearchParams
-	var searchResults []DTO.SearchParam
-	if err := query.Find(&searchResults).Error; err != nil {
-		return nil, err
-	}
-	data.SearchParams = &searchResults
 	return resultListKols, nil
 }

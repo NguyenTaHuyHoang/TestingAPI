@@ -42,7 +42,8 @@ const Page = () => {
     // * Fetch API over here 
     // * Use useEffect to fetch data from API 
 	const [currentPage, setCurrentPage] = useState(1);
-	const pageLimit = 4;
+	const pageLimit = 5;
+	const [searchLanguage, setSearchLanguage] = useState('');
 
     useEffect(() => {
 		const fetchKols = async () => {
@@ -51,13 +52,11 @@ const Page = () => {
 				const response = await axios.get('http://localhost:8081/kols', {
 					params: {
 						pageIndex: 1,
-						pageLimit: 100
+						pageLimit: 30
 					}
 				});
-				//console.log('API Data:', response.data.kol);
 				if (Array.isArray(response.data.kol)) {
                     setKols(response.data.kol);
-					//console.log('State Data:', Kols);
                 }
 				else {
                     console.error('Expected an array but got:', response.data.kol);
@@ -70,6 +69,33 @@ const Page = () => {
 		};
 		fetchKols();
     }, []);
+
+	const fetchKols_searchParams = async () => {
+		setLoading(true);
+		try {
+			const searchParams = JSON.stringify(
+				{"key":"language","value": searchLanguage}
+			);
+			// searchParams={"key":"language","value":"English"}
+			const response = await axios.get('http://localhost:8081/kols', {
+				params: {
+					pageIndex: 1,
+					pageLimit: 30,
+					searchParams: searchParams
+				}
+			});
+			if (Array.isArray(response.data.kol)) {
+				setKols(response.data.kol);
+			}
+			else {
+				console.error('Expected an array but got:', response.data.kol);
+			}
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	const scrollToTop = () => {
 		if (currentPage > 1) {
@@ -125,6 +151,18 @@ const Page = () => {
     return (
         <div className="container">
             <h1 className="header">Kols List</h1>
+			<div className="search-form">
+				<input
+					type="text"
+					placeholder="Search by language"
+					value={searchLanguage}
+					onChange={(e) => setSearchLanguage(e.target.value)}
+				/>
+				<button onClick={() => {
+					setCurrentPage(1); // Reset to the first page when searching
+					fetchKols_searchParams(); // Fetch KOLs with new search parameters
+				}}>Search</button>
+			</div>
             <div className="scroll-buttons">
                 <button onClick={scrollToTop} className="scroll-button" disabled={currentPage === 1}>Scroll Up</button>
                 <button onClick={scrollToBottom} className="scroll-button" disabled={(currentPage * pageLimit) >= Kols.length}>Scroll Down</button>
