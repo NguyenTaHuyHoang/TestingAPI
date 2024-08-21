@@ -16,6 +16,7 @@
 ### I used cloud postgresql and deployed the application. If you want to run on your localmachine please change the following information:
 - In the page.tsx file, change the url in the await axios.get command to 'http://localhost:8081/kols'
 - In the main.go file, change the url inside AllowOrigins to 'http://localhost:3000'
+- Change DB_URL inside the .env file to match your database
 
 ### BACKEND Part
 1. Clone the repository:
