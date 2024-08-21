@@ -124,6 +124,7 @@ const Page = () => {
                                         <th>Language</th>
                                         <th>Education</th>
                                         <th>Expected Salary</th>
+										<th>Expected Salary Enable</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -134,6 +135,7 @@ const Page = () => {
                                             <td>{kol.language}</td>
                                             <td>{kol.education}</td>
                                             <td>{kol.expectedSalary}</td>
+											<td>{kol.expectedSalaryEnable.toString()}</td>
                                         </tr>
                                     ))}
                                 </tbody>
