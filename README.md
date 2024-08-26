@@ -39,7 +39,7 @@ go run ./main.go
 1. Navigate to FE's main folder and Run this command
 ```
 npm i
-npm run dev
+npm run dev 
 ```
 
 2. Start the server:
