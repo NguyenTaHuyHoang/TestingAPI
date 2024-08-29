@@ -1,7 +1,7 @@
 ## CODING TEST
     - Author: Nguyễn Tạ Huy Hoàng
     - GitHub: https://github.com/NguyenTaHuyHoang 
-    - Link: https://testing-api-lac.vercel.app/ 
+    - Link: https://testing-api-lac.vercel.app/  
   
 ## Technologies Used
     - Go (Golang): Go is a statically typed, compiled language known for its performance and simplicity, serving as the foundation for this project.
