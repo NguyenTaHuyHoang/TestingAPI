@@ -1,5 +1,5 @@
 ## CODING TEST
-    - Author: Nguyễn Tạ Huy Hoàng 
+    - Author: Nguyễn Tạ Huy Hoàng  
     - GitHub: https://github.com/NguyenTaHuyHoang  
     - Link: https://testing-api-lac.vercel.app/   
   
