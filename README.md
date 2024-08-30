@@ -9,7 +9,7 @@
     - gorm: gorm is a library that enables database connectivity to Postgresql and data handling.
     - Nextjs: Next.js: A React framework used for building fast.
     - Axios: A promise-based HTTP client for making asynchronous API requests, simplifying data fetching and response handling in the application.
-    - Postman: Use Postman to test API.
+    - Postman: Use Postman to test API. 
     - Database: Neon (Cloud postgresql).
 
 ## Usage
