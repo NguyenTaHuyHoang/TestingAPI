@@ -7,7 +7,7 @@
     - Go (Golang): Go is a statically typed, compiled language known for its performance and simplicity, serving as the foundation for this project.
     - gin: Gin is a library that facilitates API development for this project.
     - gorm: gorm is a library that enables database connectivity to Postgresql and data handling.
-    - Nextjs: Next.js: A React framework used for building fast.
+    - Nextjs: Next.js: A React framework used for building fast. 
     - Axios: A promise-based HTTP client for making asynchronous API requests, simplifying data fetching and response handling in the application.
     - Postman: Use Postman to test API. 
     - Database: Neon (Cloud postgresql).
